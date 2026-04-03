@@ -7,8 +7,22 @@ import {
 } from '@/lib/platform-rules';
 import { isAIAvailable, generateWithAI, reviewWithAI, reviseWithAI, getEngineInfo, analyzeImagesWithGemini, type ImageInput } from '@/lib/ai-engine';
 
-const BRAND_DB_PATH = '/Volumes/PSSD/周生生/BRAND_DATABASE.md';
-const OUTPUT_DIR = '/Volumes/PSSD/周生生/outputs';
+// 路径：优先项目内目录（部署），回退本地 PSSD（开发）
+function resolveDataPath(filename: string): string {
+  const inProject = path.join(process.cwd(), 'data', filename);
+  if (fs.existsSync(inProject)) return inProject;
+  const localPath = `/Volumes/PSSD/周生生/${filename}`;
+  if (fs.existsSync(localPath)) return localPath;
+  return inProject;
+}
+const BRAND_DB_PATH = resolveDataPath('BRAND_DATABASE.md');
+const OUTPUT_DIR = (() => {
+  const dirs = [path.join(process.cwd(), 'outputs'), '/Volumes/PSSD/周生生/outputs'];
+  for (const d of dirs) { if (fs.existsSync(d)) return d; }
+  const fallback = dirs[0];
+  fs.mkdirSync(fallback, { recursive: true });
+  return fallback;
+})();
 
 // ============================================================
 // 五维审查维度定义（EASYCLAW 对抗式内容审查）

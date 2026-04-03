@@ -3,8 +3,24 @@ import fs from 'fs';
 import path from 'path';
 import { analyzeImagesWithGemini } from '@/lib/ai-engine';
 
-const BRAND_DB_PATH = '/Volumes/PSSD/周生生/BRAND_DATABASE.md';
-const ASSETS_DIR = '/Volumes/PSSD/周生生/assets';
+// 路径：优先项目内目录（部署），回退本地 PSSD（开发）
+function resolveWritablePath(subdir: string): string {
+  const inProject = path.join(process.cwd(), subdir);
+  const localPath = `/Volumes/PSSD/周生生/${subdir}`;
+  // 部署环境用项目内目录，本地开发用 PSSD
+  if (fs.existsSync(localPath)) return localPath;
+  if (!fs.existsSync(inProject)) fs.mkdirSync(inProject, { recursive: true });
+  return inProject;
+}
+function resolveDataFile(filename: string): string {
+  const inProject = path.join(process.cwd(), 'data', filename);
+  if (fs.existsSync(inProject)) return inProject;
+  const localPath = `/Volumes/PSSD/周生生/${filename}`;
+  if (fs.existsSync(localPath)) return localPath;
+  return inProject;
+}
+const BRAND_DB_PATH = resolveDataFile('BRAND_DATABASE.md');
+const ASSETS_DIR = resolveWritablePath('assets');
 
 // 确保 assets 目录存在
 if (!fs.existsSync(ASSETS_DIR)) {

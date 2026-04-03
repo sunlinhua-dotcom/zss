@@ -26,6 +26,10 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# 品牌数据库随代码一起部署
+COPY --from=builder --chown=nextjs:nodejs /app/data ./data
+# 创建可写目录
+RUN mkdir -p outputs assets && chown nextjs:nodejs outputs assets
 
 USER nextjs
 EXPOSE 8080

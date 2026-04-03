@@ -2,7 +2,13 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-const OUTPUT_DIR = '/Volumes/PSSD/周生生/outputs';
+const OUTPUT_DIR = (() => {
+  const inProject = path.join(process.cwd(), 'outputs');
+  const localPath = '/Volumes/PSSD/周生生/outputs';
+  if (fs.existsSync(localPath)) return localPath;
+  if (!fs.existsSync(inProject)) fs.mkdirSync(inProject, { recursive: true });
+  return inProject;
+})();
 
 export async function GET() {
   try {

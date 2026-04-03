@@ -2,16 +2,27 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// 品牌数据库的绝对路径（本地 PSSD 外置硬盘）
-const BRAND_DB_PATH = '/Volumes/PSSD/周生生/BRAND_DATABASE.md';
-const BRAND_DB_MULTIMODAL_PATH = '/Volumes/PSSD/周生生/BRAND_DATABASE_MULTIMODAL.md';
+// 品牌数据库路径：优先读项目内 data/ 目录（部署环境），回退到本地外置硬盘（开发环境）
+function resolveBrandPath(filename: string): string {
+  // 1. 项目内 data/ 目录（Docker 部署时可用）
+  const inProject = path.join(process.cwd(), 'data', filename);
+  if (fs.existsSync(inProject)) return inProject;
+  // 2. 本地开发环境回退
+  const localPSSD = `/Volumes/PSSD/周生生/${filename}`;
+  if (fs.existsSync(localPSSD)) return localPSSD;
+  return inProject; // 返回项目路径（404 由后续逻辑处理）
+}
+
+const BRAND_DB_FILE = 'BRAND_DATABASE.md';
+const BRAND_DB_MULTIMODAL_FILE = 'BRAND_DATABASE_MULTIMODAL.md';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const mode = searchParams.get('mode') || 'structured'; // structured | multimodal
 
   try {
-    const targetPath = mode === 'multimodal' ? BRAND_DB_MULTIMODAL_PATH : BRAND_DB_PATH;
+    const targetFile = mode === 'multimodal' ? BRAND_DB_MULTIMODAL_FILE : BRAND_DB_FILE;
+    const targetPath = resolveBrandPath(targetFile);
 
     if (!fs.existsSync(targetPath)) {
       return NextResponse.json(
