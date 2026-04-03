@@ -25,15 +25,15 @@ export const PLATFORM_RULES: Record<PlatformId, PlatformRule> = {
     name: '微博',
     icon: '🔥',
     position: '热点传播 · 公域舆论场 · 粉丝互动',
-    style: '轻松及时、观点鲜明、社交感强、能引发共鸣或讨论',
+    style: '品牌官方发言人视角，克制、凝练、大气，减少第一人称“我”，增加第三人称“周生生”、“我们”',
     wordRange: [60, 100],
     hashtagRule: '必须添加 1-2 个 #话题# 标签（含品牌话题 + 热点话题）',
-    ctaTemplate: '互动提问 + @品牌官方微博 + 话题标签',
-    formatTips: 'emoji 分割 + 短句为主 + 配图说明 + @互动',
-    toneGuide: '活泼、快节奏、有观点、适度玩梗',
-    sampleStructure: `【hook 开头·引发好奇】
-正文（2-3 段短句，每段 emoji 分割）
-互动提问
+    ctaTemplate: '官方邀请预约 / 互动提问 + @品牌官方微博 + 话题标签',
+    formatTips: '固定三段式：宏观意象引导 + 核心系列推介 + 官方邀请预约',
+    toneGuide: '克制、凝练、大气，品牌官方发言人',
+    sampleStructure: `【宏观意象引导】
+【核心系列推介】（点出设计与寓意）
+【官方邀请预约】（转化动作）
 #品牌话题# #热点话题#`,
   },
 
@@ -47,7 +47,7 @@ export const PLATFORM_RULES: Record<PlatformId, PlatformRule> = {
     hashtagRule: '不适用（微信搜索靠文章关键词布局，无话题标签机制）',
     ctaTemplate: '文末引导：小程序跳转 / 阅读原文 / 关注公众号',
     formatTips: '结构化分段 + 小标题 + 14-16px字号 + 1.5倍行距 + 配色≤3种',
-    toneGuide: '品牌感、有温度的专业、叙事化',
+    toneGuide: '品牌资深专栏作家、有温度的专业、叙事化',
     sampleStructure: `【标题：系列名+核心卖点+情感修饰】
 
 引言段（场景代入 / 情绪引子）
@@ -69,30 +69,27 @@ export const PLATFORM_RULES: Record<PlatformId, PlatformRule> = {
     name: '小红书',
     icon: '📕',
     position: '种草决策 · 生活方式分享 · 真实评测',
-    style: '真诚经验分享、精致视觉、POV第一视角、高互动',
+    style: '生活方式 OOTD 博主视角，强烈的生活场景代入感（足金+龙鳞≈新中式/老钱风；PROMESSA≈职场通勤/西装）',
     wordRange: [300, 450],
     hashtagRule: '必须添加 3-5 个精准标签（品牌标签 + 产品标签 + 场景标签）',
-    ctaTemplate: '评论区互动提问（\"你们觉得哪款更好看？\"）',
-    formatTips: 'emoji 丰富 + 段落清晰 + 首图精美 + 文末互动问题',
-    toneGuide: '闺蜜推荐、真实种草、有细节、不硬推',
+    ctaTemplate: '评论区互动提问（"你们觉得哪款更好看？"）',
+    formatTips: '强制约束：必须包含“穿搭场景描述”模块，且比例不低于总篇幅的40%',
+    toneGuide: '精致生活方式博主/穿搭搭子、真实种草、不硬推',
     sampleStructure: `【标题：数字+emoji+核心关键词，≤20字】
 
-姐妹们！这波真的被戳到了 🫠
+【引入语：情绪或痛点切入】
 
-📌 关于这个系列
-第一人称真实体验描述…
+📌 穿搭场景分享（占全文40%以上）
+结合具体衣服材质、颜色、妆容、出名场景（如新中式、极简风、通勤）进行沉浸式描述…
 
-✨ 最打动我的 3 个细节
-1️⃣ 细节一…
-2️⃣ 细节二…
-3️⃣ 细节三…
+✨ 产品工艺细节（占全文30%）
+具体工艺的真实感受（如捶打纹、哑光质感）…
 
-💡 搭配心得
-上手实拍分享…
+💡 搭配建议（占全文20%）
+叠搭技巧…
 
-你们更喜欢哪款？评论区告诉我！👇
-
-#品牌标签 #产品标签 #场景标签 #种草标签`,
+【互动引导】（占全文10%）
+#主要标签 #场景标签 #OOTD`,
   },
 
   wecom: {
@@ -100,15 +97,17 @@ export const PLATFORM_RULES: Record<PlatformId, PlatformRule> = {
     name: '企微朋友圈',
     icon: '🤝',
     position: '私域精细运营 · 一对一互动 · CRM转化',
-    style: '贴心、专业、直接、服务感、弱广告感',
+    style: '贴心且专业的周生生专属顾问，强制采用 Bullet points 提炼核心卖点',
     wordRange: [40, 100],
     hashtagRule: '不适用（企微无话题机制）',
-    ctaTemplate: '直接行动引导："私信我领取专属优惠" / "扫码预约到店"',
-    formatTips: '极简精炼 + 配实拍图 + 口语化 + 不超过3行',
-    toneGuide: '像朋友推荐、服务感、有温度但不啰嗦',
-    sampleStructure: `【一句话核心推荐】
+    ctaTemplate: '结合线下服务标签（免费清洗、专属顾问预约、备婚季限时礼遇、一对一试戴）',
+    formatTips: '格式严格化：【活动/系列名】+ 核心卖点(Bullet) + 明确CTA（带服务价值）',
+    toneGuide: '贴心、专业、直接、带有极强的服务感和促单转化钩子',
+    sampleStructure: `【活动/系列名称】
 补充一句价值点/稀缺性
-👉 行动引导（私信/预约/链接）`,
+- 核心卖点或者工艺细节 1
+- 核心卖点或者工艺细节 2
+👉 【明确服务 CTA】（欢迎私信预约一对一试戴/免费清洗服务）`,
   },
 };
 
